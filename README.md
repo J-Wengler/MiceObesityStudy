@@ -71,7 +71,9 @@ This can be done in an IDE of your choice or via commandline with the following 
 You will have to edit the file to change the paths that the code uses. There are extensive comments in the code that walk you through how to do this. 
 
 #### 5. Clean the count table manually
-By default, featureCounts puts a lot of information into the count table that is unnecessary and will break the downstream DESeq2 analysis. Contained in this repository is a file called CorrectCountTable.png. This is a screenshot of the EXACT layout that your file should be in. The easiest way to edit the count table is to open it in excel and delete the unnecessary columns (DO NOT convert the file to .xslx, keep it as a .csv)
+By default, featureCounts puts a lot of information into the count table that is unnecessary and will break the downstream DESeq2 analysis. Below is a screenshot of the EXACT layout that your file should be in. The easiest way to edit the count table is to open it in excel and delete the unnecessary columns (DO NOT convert the file to .xslx, keep it as a .csv)
+
+![Your file should look like this] (https://github.com/J-Wengler/MiceObesityStudy/blob/main/CorrectCountTable.png)
 
 #### 6. Run ObeseMiceDeSEQ2.R
 This step is best done in Rstudio to enable easy viewing of the graphs, results, etc. Once ObeseMiceDeSEQ2.R is opened in RStudio, read the comments to change the script to perform whatever analysis you want
