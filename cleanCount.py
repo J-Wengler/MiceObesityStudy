@@ -9,7 +9,6 @@
 # REQUIRED: Count table created by the featureCounts package 
 # OUTPUT: refactored count table, meta table
 
-
 # The pandas package is used to clean/manipulate dataframes in Python
 import pandas as pd
 
@@ -29,7 +28,8 @@ for col in data.columns:
         sample_name = bam_name.split(".")[0]
         # Add the sample name to a master list to be used later in the meta table generation
         sample_names.append(sample_name)
-        # col needs to be the originial column name in the dataframe, sample_name needs to be whatever you want the new column name to be
+        # col needs to be the original column name in the dataframe, sample_name needs to be whatever you want the new column name to be
+        # For example, col = "/Volumes/TheBrick/Data/ChangLab/MouseData/ObesityStudyRNASeq/bam/rawBams/6A.bam" and sample_name = "6A"
         new_col_dict[col] = sample_name
 
 # IF THIS LINE THROWS AN ERROR THEN THE ABOVE FOR LOOP IS DOING SOMETHING WRONG
