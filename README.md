@@ -1,5 +1,5 @@
 # Differential Expression Data Analysis for the Mice Obesity Study
-James Wengler | jwengler@gmail.com
+James Wengler | jwengler@gmail.com |
 Last Updated: June 21, 2022
 ### Analysis Overview
 This code is designed to analyze the RNASeq data from the Mice Obesity Study. The data for this project was provided by Dr. Chang's lab. The goal of these scripts is to use the DESeq2 package to perform a differential expression analysis on the RNASeq Data. For an overview of DESeq2 and what it can do please refer to: https://lashlock.github.io/compbio/R_presentation.html
