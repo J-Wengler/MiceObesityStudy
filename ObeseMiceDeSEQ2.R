@@ -23,13 +23,47 @@ metaData <- read.csv("/Users/jameswengler/meta_count_table.csv")
 # This command can be broken done into 3 parts
 # 1. pass the count table to the varible countData
 # 2. pass the meta table to the variable colData
-# 3. The deign variable will be HIGHLY dependent on what you want to do. A quick google search
+# 3. The design variable will be HIGHLY dependent on what you want to do. A quick google search
 # will help you decide what to set this variable as
-dds <- DESeqDataSetFromMatrix(countData = countData, colData = metaData, design = ~treatment)
+dds <- DESeqDataSetFromMatrix(countData = countData, colData = metaData, design = ~mouse)
 
 # Analysis below! This can be a traditional DESeq analysis, a PCA graph, whatever you decide
 # This is a great resource for looking at the various things DESeq2 can do: https://lashlock.github.io/compbio/R_presentation.html
 dds <- DESeq(dds)
-#res <- results(dds)
-vsdata <- vst(dds, blind=FALSE)
-plotPCA(vsdata, intgroup = "treatment")
+
+#vsdata <- vst(dds, blind=FALSE)
+#plotPCA(vsdata, intgroup = "treatment")
+
+res <- results(dds)
+summary(res)
+res <- res[order(res$log2FoldChange, decreasing = TRUE),]
+print(head(res))
+
+# Most Negative Fold Changes
+# ENSMUSG00000032532.8
+# ENSMUSG00000116336.3
+# ENSMUSG00000093861.3
+# ENSMUSG00000043311.8
+# ENSMUSG00000106550.2
+
+# Most Positive Fold Changes
+# ENSMUSG00000079852.5
+# ENSMUSG00000056770.16
+# ENSMUSG00000094501.4
+# ENSMUSG00000085677.8
+# ENSMUSG00000082084.2
+
+sigRes <- subset(res, padj < .05)
+write.csv(as.data.frame(sigRes), file = "/Users/jameswengler/MiceObesityStudy/MouseModelsCompared.csv")
+
+par(mfrow=c(2,5))
+plotCounts(dds, gene="ENSMUSG00000032532.8", intgroup="mouse")
+plotCounts(dds, gene="ENSMUSG00000116336.3", intgroup="mouse")
+plotCounts(dds, gene="ENSMUSG00000093861.3", intgroup="mouse")
+plotCounts(dds, gene="ENSMUSG00000043311.8", intgroup="mouse")
+plotCounts(dds, gene="ENSMUSG00000106550.2", intgroup="mouse")
+plotCounts(dds, gene="ENSMUSG00000079852.5", intgroup="mouse")
+plotCounts(dds, gene="ENSMUSG00000056770.16", intgroup="mouse")
+plotCounts(dds, gene="ENSMUSG00000094501.4", intgroup="mouse")
+plotCounts(dds, gene="ENSMUSG00000085677.8", intgroup="mouse")
+plotCounts(dds, gene="ENSMUSG00000082084.2", intgroup="mouse")
