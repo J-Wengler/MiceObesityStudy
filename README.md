@@ -19,7 +19,7 @@ Packages used in analysis (June 21, 2022)
 5. Manually clean the count table
 6. Run ObeseMiceDeSEQ2.R to perform the DESeq2 analysis
 
-#### 1. Obtain the aligned bamfiles andn reference genome
+#### 1. Obtain the aligned bamfiles and reference genome
 The raw data for this experiment are the aligned bamfiles from the Mice Obesity study. The other required file is a reference genome in the .gtf format. This can be obtained here: https://www.gencodegenes.org/mouse/. The file I used was the "Comprehensive gene annotation" covering the CHR regions. 
 
 #### 2. Install the necessary packages
