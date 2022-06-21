@@ -79,4 +79,3 @@ This step is best done in Rstudio to enable easy viewing of the graphs, results,
 ### Contact
 Please contact James Wengler with any questions.
 jwengler@gmail.com
-jwengler@tamu.edu
