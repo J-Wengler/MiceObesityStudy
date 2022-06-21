@@ -54,9 +54,13 @@ The following command is the exact command I used:
 featureCounts -a /Path/To/gencode.vM29.annotation.gtf -T 4 -o /Path/To/CountTable.tsv /Path/To/rawBams/*
 ```
 ```featureCounts``` -> Calls the package
+
 ```-a /Path/To/gencode.vM29.annotation.gtf``` -> Where the package should look for the .gtf file
+
 ```-T 4``` -> Uses 4 cores for multithreading. This is optional but will speed up the code if you have multiple cores available
+
 ```-o /Path/To/CountTable.tsv``` -> Where you want the count table to be saved
+
 ```/Path/To/rawBams/*``` -> Where the raw bamfiles are located. This should be a directory containing ONLY the bamfiles
 
 On a 2017 Macbook Air with 4 cores this step took approximately 1.5 hours to run. 
