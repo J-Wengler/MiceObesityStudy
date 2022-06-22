@@ -25,7 +25,7 @@ metaData <- read.csv("/Users/jameswengler/meta_count_table.csv")
 # 2. pass the meta table to the variable colData
 # 3. The design variable will be HIGHLY dependent on what you want to do. A quick google search
 # will help you decide what to set this variable as
-dds <- DESeqDataSetFromMatrix(countData = countData, colData = metaData, design = ~mouse)
+dds <- DESeqDataSetFromMatrix(countData = countData, colData = metaData, design = ~diet)
 
 # Analysis below! This can be a traditional DESeq analysis, a PCA graph, whatever you decide
 # This is a great resource for looking at the various things DESeq2 can do: https://lashlock.github.io/compbio/R_presentation.html
@@ -36,34 +36,47 @@ dds <- DESeq(dds)
 
 res <- results(dds)
 summary(res)
-res <- res[order(res$log2FoldChange, decreasing = TRUE),]
-print(head(res))
+res <- res[order(res$padj, decreasing = FALSE),]
+print(head(res, n = 10))
 
-# Most Negative Fold Changes
-# ENSMUSG00000032532.8
-# ENSMUSG00000116336.3
-# ENSMUSG00000093861.3
-# ENSMUSG00000043311.8
-# ENSMUSG00000106550.2
-
-# Most Positive Fold Changes
-# ENSMUSG00000079852.5
+# TOP 10 P-Values (Mouse Models)
+# ENSMUSG00000038141.12
+# ENSMUSG00000075184.4
 # ENSMUSG00000056770.16
-# ENSMUSG00000094501.4
-# ENSMUSG00000085677.8
-# ENSMUSG00000082084.2
+# ENSMUSG00000004665.11
+# ENSMUSG00000116336.3
+# ENSMUSG00000043311.8
+# ENSMUSG00000022324.16
+# ENSMUSG00000048764.17
+# ENSMUSG00000032532.8
+# ENSMUSG00000037649.11
+
+# Top 10 P-Values (Diet)
+# ENSMUSG00000025900.14
+# ENSMUSG00000102269.2
+# ENSMUSG00000085623.2
+# ENSMUSG00000104046.2
+# ENSMUSG00000025905.15
+# ENSMUSG00000025907.15
+# ENSMUSG00000103845.2
+# ENSMUSG00000103329.3
+# ENSMUSG00000056763.17
+# ENSMUSG00000042501.13
+
 
 sigRes <- subset(res, padj < .05)
-write.csv(as.data.frame(sigRes), file = "/Users/jameswengler/MiceObesityStudy/MouseModelsCompared.csv")
+#write.csv(as.data.frame(sigRes), file = "/Users/jameswengler/MiceObesityStudy/DietCompared.csv")
+
+quit(1)
 
 par(mfrow=c(2,5))
-plotCounts(dds, gene="ENSMUSG00000032532.8", intgroup="mouse")
-plotCounts(dds, gene="ENSMUSG00000116336.3", intgroup="mouse")
-plotCounts(dds, gene="ENSMUSG00000093861.3", intgroup="mouse")
-plotCounts(dds, gene="ENSMUSG00000043311.8", intgroup="mouse")
-plotCounts(dds, gene="ENSMUSG00000106550.2", intgroup="mouse")
-plotCounts(dds, gene="ENSMUSG00000079852.5", intgroup="mouse")
-plotCounts(dds, gene="ENSMUSG00000056770.16", intgroup="mouse")
-plotCounts(dds, gene="ENSMUSG00000094501.4", intgroup="mouse")
-plotCounts(dds, gene="ENSMUSG00000085677.8", intgroup="mouse")
-plotCounts(dds, gene="ENSMUSG00000082084.2", intgroup="mouse")
+plotCounts(dds, gene="ENSMUSG00000025900.14", intgroup="diet")
+plotCounts(dds, gene="ENSMUSG00000102269.2", intgroup="diet")
+plotCounts(dds, gene="ENSMUSG00000085623.2", intgroup="diet")
+plotCounts(dds, gene="ENSMUSG00000104046.2", intgroup="diet")
+plotCounts(dds, gene="ENSMUSG00000025905.15", intgroup="diet")
+plotCounts(dds, gene="ENSMUSG00000025907.15", intgroup="diet")
+plotCounts(dds, gene="ENSMUSG00000103845.2", intgroup="diet")
+plotCounts(dds, gene="ENSMUSG00000103329.3", intgroup="diet")
+plotCounts(dds, gene="ENSMUSG00000056763.17", intgroup="diet")
+plotCounts(dds, gene="ENSMUSG00000042501.13", intgroup="diet")
