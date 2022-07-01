@@ -11,7 +11,9 @@ library(tidyverse)
 library(DESeq2)
 
 # This path should point at the count table
-countData <- read.csv("/Users/jameswengler/final_count_table.csv", row.names = 1)
+#countData <- read.csv("/Users/jameswengler/final_count_table.csv", row.names = 1)
+countData <- read.csv("/Volumes/TheBrick/Data/ChangLab/MouseData/ObesityStudyRNASeq/hit-counts/raw_counts.csv", row.names = 1)
+countData <- select(countData, -Gene.name)
 # This path should point to the metadata table
 metaData <- read.csv("/Users/jameswengler/meta_count_table.csv")
 
@@ -32,7 +34,7 @@ dds <- DESeqDataSetFromMatrix(countData = new_count, colData = new_meta, design 
 
 # Analysis below! This can be a traditional DESeq analysis, a PCA graph, whatever you decide
 # This is a great resource for looking at the various things DESeq2 can do: https://lashlock.github.io/compbio/R_presentation.html
-dds <- DESeq(dds)
+dds <- DESeq(dds, test = "Wald")
 
 vsdata <- vst(dds)
 plotPCA(vsdata, intgroup = "diet")
@@ -40,4 +42,5 @@ plotPCA(vsdata, intgroup = "diet")
 res <- results(dds)
 summary(res)
 res <- res[order(res$padj, decreasing = FALSE),]
+print(head(res, n = 10))
 print(head(res, n = 10))

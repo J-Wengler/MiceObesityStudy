@@ -15,6 +15,23 @@
 library(DESeq2)
 library(tidyverse)
 
+genericPCA <- function(object){
+    # calculate the variance for each gene
+    rv <- rowVars(assay(object))
+    
+    # select the ntop genes by variance
+    select <- order(rv, decreasing=TRUE)[seq_len(min(500, length(rv)))]
+    
+    # perform a PCA on the data in assay(x) for the selected genes
+    pca <- prcomp(t(assay(object)[select,]))
+    summary(pca)
+    
+    percentVar <- pca$sdev^2 / sum( pca$sdev^2 )
+    
+}
+
+# This path should point at the count table
+#countData <- read.csv("/Users/jameswengler/final_count_table.csv", row.names = 1)
 # This path should point at the count table
 countData <- read.csv("/Users/jameswengler/final_count_table.csv", row.names = 1)
 # This path should point to the metadata table
@@ -29,15 +46,32 @@ dds <- DESeqDataSetFromMatrix(countData = countData, colData = metaData, design 
 
 # Analysis below! This can be a traditional DESeq analysis, a PCA graph, whatever you decide
 # This is a great resource for looking at the various things DESeq2 can do: https://lashlock.github.io/compbio/R_presentation.html
-dds <- DESeq(dds)
-
-#vsdata <- vst(dds, blind=FALSE)
-#plotPCA(vsdata, intgroup = "treatment")
-
+dds <- DESeq(dds, test = "Wald")
 res <- results(dds)
 summary(res)
 res <- res[order(res$padj, decreasing = FALSE),]
 print(head(res, n = 10))
+
+
+vsdata <- vst(dds, blind=FALSE)
+
+##################################################
+# calculate the variance for each gene
+rv <- rowVars(assay(vsdata))
+
+# select the ntop genes by variance
+select <- order(rv, decreasing=TRUE)[seq_len(min(500, length(rv)))]
+
+# perform a PCA on the data in assay(x) for the selected genes
+pca <- prcomp(t(assay(vsdata)[select,]))
+summary(pca)
+
+percentVar <- pca$sdev^2 / sum( pca$sdev^2 )
+##################################################
+
+plotPCA(vsdata, intgroup = "mouse")
+
+
 
 # TOP 10 P-Values (Mouse Models)
 # ENSMUSG00000038141.12
@@ -69,14 +103,14 @@ sigRes <- subset(res, padj < .05)
 
 quit(1)
 
-par(mfrow=c(2,5))
-plotCounts(dds, gene="ENSMUSG00000025900.14", intgroup="diet")
-plotCounts(dds, gene="ENSMUSG00000102269.2", intgroup="diet")
-plotCounts(dds, gene="ENSMUSG00000085623.2", intgroup="diet")
-plotCounts(dds, gene="ENSMUSG00000104046.2", intgroup="diet")
-plotCounts(dds, gene="ENSMUSG00000025905.15", intgroup="diet")
-plotCounts(dds, gene="ENSMUSG00000025907.15", intgroup="diet")
-plotCounts(dds, gene="ENSMUSG00000103845.2", intgroup="diet")
-plotCounts(dds, gene="ENSMUSG00000103329.3", intgroup="diet")
-plotCounts(dds, gene="ENSMUSG00000056763.17", intgroup="diet")
-plotCounts(dds, gene="ENSMUSG00000042501.13", intgroup="diet")
+# par(mfrow=c(2,5))
+# plotCounts(dds, gene="ENSMUSG00000025900.14", intgroup="diet")
+# plotCounts(dds, gene="ENSMUSG00000102269.2", intgroup="diet")
+# plotCounts(dds, gene="ENSMUSG00000085623.2", intgroup="diet")
+# plotCounts(dds, gene="ENSMUSG00000104046.2", intgroup="diet")
+# plotCounts(dds, gene="ENSMUSG00000025905.15", intgroup="diet")
+# plotCounts(dds, gene="ENSMUSG00000025907.15", intgroup="diet")
+# plotCounts(dds, gene="ENSMUSG00000103845.2", intgroup="diet")
+# plotCounts(dds, gene="ENSMUSG00000103329.3", intgroup="diet")
+# plotCounts(dds, gene="ENSMUSG00000056763.17", intgroup="diet")
+# plotCounts(dds, gene="ENSMUSG00000042501.13", intgroup="diet")

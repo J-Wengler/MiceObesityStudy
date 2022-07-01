@@ -16,19 +16,19 @@ countData <- read.csv("/Users/jameswengler/final_count_table.csv", row.names = 1
 metaData <- read.csv("/Users/jameswengler/meta_count_table.csv")
 
 only4T1Count <- function(countTable){
-    mod_count <- select(countTable, "X1E", "X2E", "X3E", "X4E", "X5E", "X6E", "X1H", "X2H", "X3H", "X4H", "X5H", "X6H")
+    mod_count <- select(countTable, "X1G", "X2G", "X3G", "X4G", "X5G", "X6G", "X1H", "X2H", "X3H", "X4H", "X5H", "X6H")
     return(mod_count)
 }
 
 only4T1Meta <- function(metaTable){
-    mod_meta <- filter(metaTable, mouse == "E0771" & treatment == "Control")
+    mod_meta <- filter(metaTable, mouse == "E0771" & diet == "HighFatDiet")
     return(mod_meta)
 }
 
 new_count <- only4T1Count(countData)
 new_meta <- only4T1Meta(metaData)
 
-dds <- DESeqDataSetFromMatrix(countData = new_count, colData = new_meta, design = ~diet)
+dds <- DESeqDataSetFromMatrix(countData = new_count, colData = new_meta, design = ~treatment)
 
 # Analysis below! This can be a traditional DESeq analysis, a PCA graph, whatever you decide
 # This is a great resource for looking at the various things DESeq2 can do: https://lashlock.github.io/compbio/R_presentation.html
