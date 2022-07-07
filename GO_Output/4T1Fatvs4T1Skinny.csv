@@ -1,0 +1,3 @@
+query,significant,p_value,term_size,query_size,intersection_size,precision,recall,term_id,source,term_name,effective_domain_size,source_order,parents
+query_1,TRUE,0.04996357655267509,1,3,1,0.3333333333333333,1,GO:0086030,GO:BP,adenylate cyclase-activating adrenergic receptor signaling pathway involved in cardiac muscle relaxation,27543,20982,
+query_1,TRUE,0.04996357655267509,1,3,1,0.3333333333333333,1,GO:2000707,GO:BP,positive regulation of dense core granule biogenesis,27543,29910,

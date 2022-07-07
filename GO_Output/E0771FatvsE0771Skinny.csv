@@ -1,0 +1,2 @@
+query,significant,p_value,term_size,query_size,intersection_size,precision,recall,term_id,source,term_name,effective_domain_size,source_order,parents
+query_1,TRUE,0.04993843589618584,1,5,1,0.2,1,GO:0047613,GO:MF,aconitate decarboxylase activity,25412,7975,
